@@ -54,14 +54,14 @@ body {
   z-index: 20;
 }
 #control-panel.collapsed {
-  transform: translateX(calc(100% - 44px));
+  transform: translateX(100%);
 }
 #control-panel:hover { border-color: rgba(80, 180, 255, 0.5); }
 
-/* Panel toggle tab — built into the panel's left edge */
+/* Panel toggle tab — sticks out from panel's left edge */
 #panel-toggle {
   position: absolute;
-  left: 0; top: 50%;
+  right: 100%; top: 50%;
   transform: translateY(-50%);
   width: 44px; height: 72px;
   background: rgba(10, 15, 30, 0.85);
@@ -96,7 +96,6 @@ body {
   padding-bottom: 14px;
   border-bottom: 1px solid rgba(80, 180, 255, 0.2);
   margin-bottom: 14px;
-  padding-left: 44px;
 }
 
 .panel-title {
@@ -250,16 +249,13 @@ body {
     font-size: 11px;
     border-radius: 14px 0 0 14px;
   }
-  .panel-title { font-size: 12px; letter-spacing: 1px; padding-left: 38px; }
+  .panel-title { font-size: 12px; letter-spacing: 1px; }
   .ctrl-btn { padding: 7px 10px; font-size: 10px; }
   #info-modal { min-width: 260px; max-width: 320px; }
   #panel-toggle {
     width: 38px; height: 52px;
     font-size: 12px;
     border-radius: 10px 0 0 10px;
-  }
-  #control-panel.collapsed {
-    transform: translateX(calc(100% - 38px));
   }
 }
 </style>
