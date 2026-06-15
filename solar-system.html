@@ -37,15 +37,16 @@ body {
 
 /* ---- Control Panel ---- */
 #control-panel {
-  position: absolute;
-  top: 20px; right: 20px;
+  position: fixed;
+  top: 20px; right: 0;
   width: 280px;
   padding: 20px 18px 16px;
   background: rgba(10, 15, 30, 0.72);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(80, 180, 255, 0.25);
-  border-radius: 16px;
+  border-right: none;
+  border-radius: 16px 0 0 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
   color: #c8e6ff;
   font-size: 13px;
@@ -53,21 +54,17 @@ body {
   z-index: 20;
 }
 #control-panel.collapsed {
-  transform: translateX(calc(100% + 32px));
-  pointer-events: none;
+  transform: translateX(calc(100% - 44px));
 }
 #control-panel:hover { border-color: rgba(80, 180, 255, 0.5); }
 
-/* Panel toggle tab — stays visible when panel is collapsed */
+/* Panel toggle tab — built into the panel's left edge */
 #panel-toggle {
-  position: fixed;
-  right: 0;
-  top: 50%;
+  position: absolute;
+  left: 0; top: 50%;
   transform: translateY(-50%);
-  z-index: 25;
-  width: 36px;
-  height: 72px;
-  background: rgba(10, 15, 30, 0.8);
+  width: 44px; height: 72px;
+  background: rgba(10, 15, 30, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(80, 180, 255, 0.3);
@@ -80,15 +77,32 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: auto;
+  z-index: 21;
   transition: all 0.2s;
   letter-spacing: 0;
 }
 #panel-toggle:hover {
-  background: rgba(30, 60, 100, 0.85);
+  background: rgba(30, 60, 100, 0.9);
   border-color: rgba(100, 200, 255, 0.6);
   color: #fff;
   box-shadow: 0 0 16px rgba(60, 140, 220, 0.35);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: -20px -18px 14px -18px;
+  padding: 12px 18px 12px 0;
+  border-bottom: 1px solid rgba(80, 180, 255, 0.2);
+  position: relative;
+}
+.panel-header .panel-title {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+  flex: 1;
+  text-align: center;
 }
 
 .panel-title {
@@ -236,19 +250,26 @@ body {
 /* ---- Responsive ---- */
 @media (max-width: 600px) {
   #control-panel {
-    top: 10px; right: 8px;
-    width: 230px;
+    top: 10px;
+    width: 240px;
     padding: 14px 12px 12px;
     font-size: 11px;
-    border-radius: 14px;
+    border-radius: 14px 0 0 14px;
+  }
+  .panel-header {
+    margin: -14px -12px 12px -12px;
+    padding: 10px 12px 10px 0;
   }
   .panel-title { font-size: 12px; letter-spacing: 1px; }
   .ctrl-btn { padding: 7px 10px; font-size: 10px; }
   #info-modal { min-width: 260px; max-width: 320px; }
   #panel-toggle {
-    width: 30px; height: 56px;
+    width: 38px; height: 52px;
     font-size: 12px;
     border-radius: 10px 0 0 10px;
+  }
+  #control-panel.collapsed {
+    transform: translateX(calc(100% - 38px));
   }
 }
 </style>
@@ -261,12 +282,12 @@ body {
 <canvas id="three-canvas"></canvas>
 
 <div id="ui-layer">
-  <!-- Panel Toggle Tab -->
-  <button id="panel-toggle" title="隐藏面板">◀</button>
-
   <!-- Control Panel -->
   <div id="control-panel">
-    <div class="panel-title">◈ 太阳系控制台 ◈</div>
+    <div class="panel-header">
+      <button id="panel-toggle" title="隐藏面板">◀</button>
+      <div class="panel-title">◈ 太阳系控制台 ◈</div>
+    </div>
 
     <div class="control-group">
       <button id="btn-toggle-orbits" class="ctrl-btn active">
