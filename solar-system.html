@@ -88,21 +88,15 @@ body {
   box-shadow: 0 0 16px rgba(60, 140, 220, 0.35);
 }
 
-.panel-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: -20px -18px 14px -18px;
-  padding: 12px 18px 12px 0;
-  border-bottom: 1px solid rgba(80, 180, 255, 0.2);
-  position: relative;
-}
-.panel-header .panel-title {
-  padding-bottom: 0;
-  margin-bottom: 0;
-  border-bottom: none;
-  flex: 1;
+.panel-title {
   text-align: center;
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 2px;
+  color: #5cb8ff;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(80, 180, 255, 0.2);
+  margin-bottom: 14px;
+  padding-left: 44px;
 }
 
 .panel-title {
@@ -256,11 +250,7 @@ body {
     font-size: 11px;
     border-radius: 14px 0 0 14px;
   }
-  .panel-header {
-    margin: -14px -12px 12px -12px;
-    padding: 10px 12px 10px 0;
-  }
-  .panel-title { font-size: 12px; letter-spacing: 1px; }
+  .panel-title { font-size: 12px; letter-spacing: 1px; padding-left: 38px; }
   .ctrl-btn { padding: 7px 10px; font-size: 10px; }
   #info-modal { min-width: 260px; max-width: 320px; }
   #panel-toggle {
@@ -284,10 +274,8 @@ body {
 <div id="ui-layer">
   <!-- Control Panel -->
   <div id="control-panel">
-    <div class="panel-header">
-      <button id="panel-toggle" title="隐藏面板">◀</button>
-      <div class="panel-title">◈ 太阳系控制台 ◈</div>
-    </div>
+    <button id="panel-toggle" title="隐藏面板">◀</button>
+    <div class="panel-title">◈ 太阳系控制台 ◈</div>
 
     <div class="control-group">
       <button id="btn-toggle-orbits" class="ctrl-btn active">
@@ -558,12 +546,12 @@ function createStarLayer(count, size, spread, colorVar) {
     positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
     positions[i * 3 + 2] = r * Math.cos(phi);
 
-    const brightness = 0.5 + Math.random() * 0.5;
+    const brightness = 0.65 + Math.random() * 0.35;
     const tint = colorVar * (Math.random() - 0.5);
     colors[i * 3]     = Math.min(1, brightness + tint);
     colors[i * 3 + 1] = Math.min(1, brightness + tint * 0.5);
     colors[i * 3 + 2] = Math.min(1, brightness);
-    sizes[i] = size * (0.3 + Math.random() * 0.7);
+    sizes[i] = size * (0.4 + Math.random() * 0.6);
   }
 
   geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -571,21 +559,21 @@ function createStarLayer(count, size, spread, colorVar) {
   geo.setAttribute('size',     new THREE.BufferAttribute(sizes, 1));
 
   const mat = new THREE.PointsMaterial({
-    size: 0.15,
+    size: 0.22,
     vertexColors: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
     transparent: true,
-    opacity: 0.8,
+    opacity: 0.9,
     sizeAttenuation: true,
   });
 
   return new THREE.Points(geo, mat);
 }
 
-const starLayer1 = createStarLayer(4000, 0.15, 200, 0.3);
-const starLayer2 = createStarLayer(2500, 0.20, 160, 0.2);
-const starLayer3 = createStarLayer(1500, 0.18, 120, 0.15);
+const starLayer1 = createStarLayer(4000, 0.22, 200, 0.3);
+const starLayer2 = createStarLayer(2500, 0.28, 160, 0.2);
+const starLayer3 = createStarLayer(1500, 0.26, 120, 0.15);
 
 scene.add(starLayer1);
 scene.add(starLayer2);
@@ -1592,9 +1580,9 @@ function animate() {
   // Star twinkle effect
   if (twinkleEnabled) {
     const t = Date.now() * 0.001;
-    starLayer1.material.opacity = 0.7 + Math.sin(t * 1.7) * 0.1 + Math.cos(t * 2.3) * 0.05;
-    starLayer2.material.opacity = 0.75 + Math.cos(t * 1.3) * 0.08 + Math.sin(t * 1.9) * 0.06;
-    starLayer3.material.opacity = 0.8 + Math.sin(t * 0.9) * 0.05 + Math.cos(t * 1.5) * 0.07;
+    starLayer1.material.opacity = 0.85 + Math.sin(t * 2.4) * 0.35 + Math.cos(t * 3.1) * 0.25;
+    starLayer2.material.opacity = 0.88 + Math.cos(t * 1.9) * 0.30 + Math.sin(t * 2.7) * 0.22;
+    starLayer3.material.opacity = 0.90 + Math.sin(t * 1.3) * 0.25 + Math.cos(t * 2.1) * 0.20;
   }
 
   // 【太阳呼吸】辉光层缩放 + 材质亮度同步脉动
@@ -1771,9 +1759,9 @@ btnTwinkle.addEventListener('click', (e) => {
     ? '<span class="btn-icon">✨</span> 星光闪烁: 开'
     : '<span class="btn-icon">✦</span> 星光闪烁: 关';
   if (!twinkleEnabled) {
-    starLayer1.material.opacity = 0.8;
-    starLayer2.material.opacity = 0.8;
-    starLayer3.material.opacity = 0.8;
+    starLayer1.material.opacity = 0.9;
+    starLayer2.material.opacity = 0.9;
+    starLayer3.material.opacity = 0.9;
   }
 });
 
